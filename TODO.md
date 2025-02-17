@@ -1,0 +1,37 @@
+- [ ] fix twoslash
+  - [ ] hover popups are too light
+  - [ ] hover popup jsdocs arent rendered properly
+- [ ] add tag system
+- [ ] add examples
+  - [ ] core
+    - [ ] interop with non effect code
+  - [ ] other
+    - [ ] how to export otel
+  - [ ] schema
+  - [ ] platform
+    - [ ] fs
+      - [ ] reading a file
+        - [ ] text
+        - [ ] bytes
+        - [ ] incrementally
+      - [ ] writing a file
+        - [ ] text
+        - [ ] bytes
+        - [ ] incrementally
+      - [ ] watching a file
+      - [ ] deleting a file
+    - [ ] processes
+      - [ ] reading from stdin
+      - [ ] writing to stdout
+      - [ ] spawning a process
+      - [ ] redirecting process outputs
+    - [ ] networking
+      - [ ] http
+        - [ ] client
+        - [ ] server
+      - [ ] websockets
+        - [ ] echo server
+      - [ ] tcp
+        - [ ] echo server
+    - [ ] workers
+    - [ ] terminal
