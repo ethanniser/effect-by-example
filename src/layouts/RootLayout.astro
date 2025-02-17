@@ -56,14 +56,10 @@ const {
   <body class="flex min-h-screen w-full flex-col p-4 font-normal">
     <div class="grow justify-center md:flex">
       <main class="w-full md:w-3/4 md:max-w-2xl">
-        <h1 class="text-4xl font-bold">{title}</h1>
-        <div class="py-3"></div>
-        <section>
-          <slot />
-        </section>
+        <slot />
       </main>
+      <div class="py-7"></div>
     </div>
-    <div class="py-7"></div>
     <Footer />
   </body>
 </html>

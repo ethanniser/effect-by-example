@@ -1,7 +1,21 @@
 ---
+import { getCollection } from "astro:content";
 import RootLayout from "../layouts/RootLayout.astro";
+import Main from "@/layouts/Main.astro";
+
+const examples = await getCollection("examples");
 ---
 
 <RootLayout>
-  <p>todo</p>
+  <Main>
+    <ul>
+      {
+        examples.map((example) => (
+          <a href={`/${example.id}`}>
+            <li>{example.data.title}</li>
+          </a>
+        ))
+      }
+    </ul>
+  </Main>
 </RootLayout>

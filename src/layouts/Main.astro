@@ -1,0 +1,14 @@
+---
+type Props = {
+  subtitle?: string;
+};
+const { subtitle } = Astro.props;
+---
+
+<h1 class="text-4xl font-bold">
+  <a href="/">Effect by Example</a>{subtitle ? `: ${subtitle}` : ""}
+</h1>
+<div class="py-3"></div>
+<section>
+  <slot />
+</section>
