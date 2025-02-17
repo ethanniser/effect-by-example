@@ -1,0 +1,22 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const collection = await getCollection("examples");
+  return collection.map((example) => ({
+    params: { id: example.id },
+    props: { example },
+  }));
+}
+
+const { example } = Astro.props;
+const { Content } = await render(example);
+---
+
+<RootLayout>
+  <article class="prose">
+    <Content />
+  </article>
+</RootLayout>
