@@ -9,5 +9,6 @@ The most basic effect program
 import { Effect } from "effect";
 
 const main = Effect.sync(() => console.log("Hello World"));
+
 Effect.runSync(main);
 ```

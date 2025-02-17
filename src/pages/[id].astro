@@ -18,6 +18,21 @@ const { Content } = await render(example);
 
 <RootLayout>
   <Main subtitle={example.data.title}>
+    <h2>Tags:</h2>
+    <div class="py-1"></div>
+    <div class="flex flex-wrap gap-2">
+      {
+        example.data.tags?.map((tag) => (
+          <a
+            href={`/tags/${tag}`}
+            class="rounded-md border border-black px-2 py-1"
+          >
+            {tag}
+          </a>
+        ))
+      }
+    </div>
+    <div class="py-3"></div>
     <article class="prose">
       <Content />
     </article>
