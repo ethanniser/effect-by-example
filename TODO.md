@@ -5,9 +5,18 @@
 - [ ] add examples
   - [ ] core
     - [ ] interop with non effect code
+    - [ ] cached / cachewithttl
+    - [ ] creating custom data types
+      - [ ] class vs non class apis
+      - [ ] data vs schema
+      - [ ] tagged error
+    - [ ] defects
   - [ ] other
-    - [ ] how to export otel
+    - [ ] how to export otel https://mattrossman.com/2025/02/17/getting-started-with-tracing-in-effect/
   - [ ] schema
+    - [ ] transformOrFail
+    - [ ] one directional transformation
+    - [ ] parseJson
   - [ ] platform
     - [ ] fs
       - [ ] reading a file
@@ -35,3 +44,9 @@
         - [ ] echo server
     - [ ] workers
     - [ ] terminal
+    - [ ] interop with non effect code
+      - [ ] making a nextjs handler
+        - [ ] basic runPromise
+        - [ ] request / params as service
+        - [ ] convert to effect platform request / response
+        - [ ] shared managed runtime across handler invocations

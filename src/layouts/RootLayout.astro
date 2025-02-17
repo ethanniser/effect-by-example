@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import "@shikijs/twoslash/style-rich.css";
 import Footer from "@/components/Footer.astro";
+import * as Constants from "@/lib/consts";
 
 interface Props {
   title?: string | undefined;
@@ -13,7 +14,7 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
-  title = "Effect By Example",
+  title = Constants.SITE_TITLE,
   description = "A collection of short examples showing Effect TS in use",
   image = "/images/twitter.jpg",
 } = Astro.props;

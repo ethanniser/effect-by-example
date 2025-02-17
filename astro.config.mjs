@@ -12,7 +12,11 @@ export default defineConfig({
       //   light: "github-light",
       //   dark: "github-dark",
       // },
-      transformers: [transformerTwoslash()],
+      transformers: [
+        transformerTwoslash({
+          rendererRich: {},
+        }),
+      ],
     },
   },
 
