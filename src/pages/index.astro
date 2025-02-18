@@ -28,7 +28,6 @@ const examples = await getCollection("examples");
         type="text"
         placeholder="Search examples"
         x-model="query"
-        @keyup.enter="query = ''"
         class="border-input bg-background ring-offset-background file:text-foreground
           placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full
           rounded-md border px-3 py-2 text-base file:border-0 file:bg-transparent
