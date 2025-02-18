@@ -9,6 +9,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@effect/experimental": "^0.41.1",
+    "@effect/opentelemetry": "^0.44.1",
+    "@effect/platform": "^0.77.1",
+    "@effect/platform-node": "^0.73.1",
+    "@effect/vitest": "^0.18.1",
     "@shikijs/twoslash": "^2.4.2",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.6",

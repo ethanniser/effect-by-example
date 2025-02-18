@@ -2,6 +2,10 @@
   - [ ] hover popups are too light
   - [ ] hover popup jsdocs arent rendered properly
 - [ ] add tag system
+- [ ] add search
+- [ ] add 'click to copy' to codeblocks
+- [ ] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
+
 - [ ] add examples
   - [ ] core
     - [ ] interop with non effect code
@@ -11,6 +15,8 @@
       - [ ] data vs schema
       - [ ] tagged error
     - [ ] defects
+    - [ ] enviorment variables
+      - [ ] custom config providers
   - [ ] other
     - [ ] how to export otel https://mattrossman.com/2025/02/17/getting-started-with-tracing-in-effect/
   - [ ] schema
@@ -33,6 +39,7 @@
       - [ ] reading from stdin
       - [ ] writing to stdout
       - [ ] spawning a process
+      - [ ] reading process output
       - [ ] redirecting process outputs
     - [ ] networking
       - [ ] http

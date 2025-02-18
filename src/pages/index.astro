@@ -8,10 +8,25 @@ const examples = await getCollection("examples");
 
 <RootLayout>
   <Main>
+    <div>
+      <a href="https://effect.website" class="underline">Effect</a> is an open source
+      TypeScript library that provides a toolkit for building safe, composable, reusable,
+      and testable systems. Please read the <a
+        href="https://effect.website/docs"
+        class="underline">official documentation</a
+      > to learn more.
+    </div>
+    <br />
+    <div>
+      <i>Effect by Example</i> is a set of fine grained examples that demonstrate
+      how to use Effect in a variety of common scenarios. Search for an example by
+      name or tag, or browse the full list below.
+    </div>
+    <br />
     <ul>
       {
         examples.map((example) => (
-          <a href={`/${example.id}`}>
+          <a href={`/${example.id}`} class="underline">
             <li>{example.data.title}</li>
           </a>
         ))
