@@ -1,3 +1,4 @@
+- [ ] dont fuck up licensing with go by example
 - [ ] fix twoslash
   - [ ] hover popups are too light
   - [ ] hover popup jsdocs arent rendered properly
