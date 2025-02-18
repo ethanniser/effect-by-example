@@ -16,21 +16,40 @@ const examples = await getCollection("examples");
         class="underline">official documentation</a
       > to learn more.
     </div>
-    <br />
+    <div class="py-3"></div>
     <div>
       <i>Effect by Example</i> is a set of fine grained examples that demonstrate
       how to use Effect in a variety of common scenarios. Search for an example by
       name or tag, or browse the full list below.
     </div>
-    <br />
-    <ul>
-      {
-        examples.map((example) => (
-          <a href={`/${example.id}`} class="underline">
-            <li>{example.data.title}</li>
-          </a>
-        ))
-      }
-    </ul>
+    <div class="py-3"></div>
+    <div x-data="{ query: '' }">
+      <input
+        type="text"
+        placeholder="Search examples"
+        x-model="query"
+        @keyup.enter="query = ''"
+        class="border-input bg-background ring-offset-background file:text-foreground
+          placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full
+          rounded-md border px-3 py-2 text-base file:border-0 file:bg-transparent
+          file:text-sm file:font-medium focus-visible:ring-2 focus-visible:ring-offset-2
+          focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50
+          md:text-sm"
+      />
+      <div class="py-3"></div>
+      <ul>
+        {
+          examples.map((example) => (
+            <a
+              href={`/${example.id}`}
+              class="underline"
+              x-show={`query === '' || "${example.data.title}".toLowerCase().includes(query.toLowerCase())`}
+            >
+              <li>{example.data.title}</li>
+            </a>
+          ))
+        }
+      </ul>
+    </div>
   </Main>
 </RootLayout>

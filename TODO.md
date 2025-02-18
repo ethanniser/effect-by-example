@@ -1,9 +1,9 @@
+- [x] add search
 - [ ] dont fuck up licensing with go by example
 - [ ] fix twoslash
   - [ ] hover popups are too light
   - [ ] hover popup jsdocs arent rendered properly
 - [ ] add tag system
-- [ ] add search
 - [ ] add 'click to copy' to codeblocks
 - [ ] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
 
