@@ -6,6 +6,7 @@
 - [ ] add tag system
 - [ ] add 'click to copy' to codeblocks
 - [ ] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
+- [ ] a way to link to docs pages
 
 - [ ] add examples
   - [ ] core
