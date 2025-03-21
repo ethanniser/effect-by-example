@@ -3,7 +3,7 @@ title: Next.js API Handler (App Router)
 tags: ["Next.js"]
 ---
 
-```ts
+```ts twoslash
 import {
   HttpApp,
   HttpServerRequest,

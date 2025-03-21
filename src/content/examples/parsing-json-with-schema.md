@@ -9,7 +9,7 @@ Effect has a powerful type validation library (like Zod) called Schema.
 
 Here is a basic example:
 
-```ts
+```ts twoslash
 import { Schema } from "effect";
 
 const testSchema = Schema.Struct({
@@ -34,7 +34,7 @@ Schema's superpower is its ability to describe two-way transformations.
 
 The type of a Schema has two type parameters: the input type and the output type.
 
-```ts
+```ts twoslash
 type Schema<Decoded, Encoded> = {};
 ```
 
@@ -44,7 +44,7 @@ Consider the `Schema.parseJson` function, which takes a schema and returns a new
 
 Combined with other schemas, which can serialize/deserialize types that are not JSON-compatible, we can build a complex schema capable of encoding/decoding any type.
 
-```ts
+```ts twoslash
 import { Schema } from "effect";
 
 const testSchema = Schema.Struct({
@@ -68,7 +68,7 @@ All of the examples so far on this page have been using the `*Sync` variants of 
 
 To consume these apis as `Effect`s, just drop the `Sync` suffix.
 
-```ts
+```ts twoslash
 import { Schema, Effect } from "effect";
 
 const schema = Schema.parseJson(

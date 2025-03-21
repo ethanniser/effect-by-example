@@ -1,0 +1,28 @@
+.expressive-code .twoslash-popup-container {
+  display: none;
+  --ec-twoSlash-brdCol: var(--ec-gtrFg);
+}
+
+.expressive-code .twoslash-popup-container .twoslash-popup-docs .expressive-code pre {
+  border: var(--ec-brdWd) solid var(--ec-brdCol) !important;
+}
+
+.expressive-code .twoslash-popup-container .twoslash-popup-docs .ec-line {
+  line-height: var(--ec-codeLineHt);
+}
+
+.expressive-code .twoslash-popup-container .twoslash-popup-docs code {
+  line-height: normal
+}
+
+.expressive-code code {
+  white-space: pre-wrap !important;
+}
+
+.expressive-code code.twoslash-popup-code::after {
+  display: none;
+}
+
+.expressive-code code.twoslash-popup-code::before {
+  display: none;
+}

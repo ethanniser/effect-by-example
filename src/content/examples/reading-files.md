@@ -5,7 +5,7 @@ tags: ["platform", "file system"]
 
 _Note: All examples on this page require the `FileSystem` service to be provided, you can do this by providing the implementation of `FileSystem` for your platform at any point in your program_
 
-```ts
+```ts twoslash
 import { Effect } from "effect";
 import { FileSystem } from "@effect/platform";
 import { NodeFileSystem } from "@effect/platform-node";
@@ -16,7 +16,7 @@ const runnable = main.pipe(Effect.provide(NodeFileSystem.layer));
 
 ## Reading a File as Bytes
 
-```ts
+```ts twoslash
 import { Effect, Console } from "effect";
 import { FileSystem } from "@effect/platform";
 
@@ -28,7 +28,7 @@ const main = Effect.gen(function* () {
 
 ## Reading a File as Text
 
-```ts
+```ts twoslash
 import { Effect, Console } from "effect";
 import { FileSystem } from "@effect/platform";
 
@@ -40,7 +40,7 @@ const main = Effect.gen(function* () {
 
 ## Reading a File Incrementally
 
-```ts
+```ts twoslash
 import { Effect } from "effect";
 import { FileSystem } from "@effect/platform";
 
