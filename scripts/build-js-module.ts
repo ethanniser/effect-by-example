@@ -14,14 +14,14 @@ async function main() {
   // Run tsup to build and minify the JS module
   await Bun.build({
     entrypoints: [moduleFilePath],
-    outdir: outputBaseFilePath,
+    outdir: "dist",
     format: "iife",
     target: "browser",
     minify: true,
   });
 
   // Read the built JS module and generate a `.min.ts` file that exports it as a string
-  let builtJsModule = readFileSync(`${outputBaseFilePath}.min.js`, "utf-8");
+  let builtJsModule = readFileSync(`${outputBaseFilePath}.js`, "utf-8");
   builtJsModule = builtJsModule.replace(/^"use strict";\r?\n?/, "").trim();
   // Wrap the code into a try...catch block to prevent errors from affecting other scripts
   builtJsModule = `try{${builtJsModule}}catch(e){console.error("[EC] ${basename(moduleFilePath, ".ts")} failed:",e)}`;
@@ -38,7 +38,7 @@ export default ${serializeStringWithSingleQuotes(builtJsModule)}
   writeFileLines(moduleFilePath.replace(/\.ts$/, ".min.ts"), jsModuleAsString);
 
   // Cleanup: Remove temporary files
-  unlinkSync(`${outputBaseFilePath}.min.js`);
+  unlinkSync(`${outputBaseFilePath}.js`);
 }
 
 main();
