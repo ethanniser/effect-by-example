@@ -24,7 +24,7 @@ const { Content } = await render(example);
       {
         example.data.tags?.map((tag) => (
           <a
-            href={`/tags/${tag}`}
+            href={`/?tag=${tag}`}
             class="rounded-md border border-black px-2 py-1"
           >
             {tag}
