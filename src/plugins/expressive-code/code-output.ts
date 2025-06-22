@@ -69,7 +69,6 @@ async function ensureSandbox(): Promise<string> {
 }
 
 async function executeCodeInSandbox(code: string): Promise<string[]> {
-	try {
 		const sandbox = await ensureSandbox();
 		const codeHash = createCodeHash(code);
 		const snippetFile = join(sandbox, `snippet-${codeHash}.ts`);
@@ -89,6 +88,10 @@ async function executeCodeInSandbox(code: string): Promise<string[]> {
 		const stdout = await new Response(proc.stdout).text();
 		const stderr = await new Response(proc.stderr).text();
 		
+		if (proc.exitCode !== 0) {
+			throw new Error(`Code execution failed with exit code ${proc.exitCode}: ${stderr}`);
+		}
+		
 		const output = [...stdout.split('\n'), ...stderr.split('\n')]
 			.filter(line => line.trim() !== '');
 		
@@ -100,10 +103,6 @@ async function executeCodeInSandbox(code: string): Promise<string[]> {
 		}
 		
 		return output;
-		
-	} catch (error) {
-		return [`Error: ${error instanceof Error ? error.message : 'Unknown error'}`];
-	}
 }
 
 export function pluginCodeOutput() {
