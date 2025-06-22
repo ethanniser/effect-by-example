@@ -6,17 +6,17 @@ import { pluginCodeOutput } from "./src/plugins/expressive-code/code-output";
 import { pluginOpenInPlayground } from "./src/plugins/expressive-code/open-in-playground";
 
 export default defineEcConfig({
-    plugins: [
-        pluginCodeOutput(),
-        pluginCollapsibleSections(),
-        pluginLineNumbers(),
-        pluginOpenInPlayground(),
-        ecTwoSlash(),
-    ],
-    themes: ["github-light", "github-dark"],
+  plugins: [
+    pluginCodeOutput(),
+    pluginCollapsibleSections(),
+    pluginLineNumbers(),
+    pluginOpenInPlayground(),
+    ecTwoSlash(),
+  ],
+  themes: ["github-light", "github-dark"],
   defaultProps: {
     showLineNumbers: true,
     wrap: false,
-    collapseStyle: "collapsible-start"
+    collapseStyle: "collapsible-start",
   },
 });

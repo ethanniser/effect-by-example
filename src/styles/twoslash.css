@@ -3,7 +3,11 @@
   --ec-twoSlash-brdCol: var(--ec-gtrFg);
 }
 
-.expressive-code .twoslash-popup-container .twoslash-popup-docs .expressive-code pre {
+.expressive-code
+  .twoslash-popup-container
+  .twoslash-popup-docs
+  .expressive-code
+  pre {
   border: var(--ec-brdWd) solid var(--ec-brdCol) !important;
 }
 
@@ -12,7 +16,7 @@
 }
 
 .expressive-code .twoslash-popup-container .twoslash-popup-docs code {
-  line-height: normal
+  line-height: normal;
 }
 
 .expressive-code code {

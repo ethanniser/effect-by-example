@@ -10,10 +10,13 @@ import { Effect } from "effect";
 import { FileSystem } from "@effect/platform";
 import { NodeFileSystem } from "@effect/platform-node";
 
-declare const main: Effect.Effect<void, never, FileSystem.FileSystem>;
+declare const main: Effect.Effect<
+  void,
+  never,
+  FileSystem.FileSystem
+>;
 const runnable = main.pipe(Effect.provide(NodeFileSystem.layer));
 ```
-
 
 ## Reading a File as Bytes
 
@@ -31,8 +34,8 @@ const main = Effect.gen(function* () {
 import { NodeContext } from "@effect/platform-node";
 await main.pipe(
   Effect.provide(NodeContext.layer),
-  Effect.runPromise
-)
+  Effect.runPromise,
+);
 ```
 
 ## Reading a File as Text
@@ -51,13 +54,13 @@ const main = Effect.gen(function* () {
 import { NodeContext } from "@effect/platform-node";
 await main.pipe(
   Effect.provide(NodeContext.layer),
-  Effect.runPromise
-)
+  Effect.runPromise,
+);
 ```
 
 ## Reading a File Incrementally
 
-```ts twoslash withOutput collapse={25-30} 
+```ts twoslash withOutput collapse={25-30}
 import { Effect } from "effect";
 import { FileSystem } from "@effect/platform";
 
@@ -86,6 +89,6 @@ const main = Effect.gen(function* () {
 import { NodeContext } from "@effect/platform-node";
 await main.pipe(
   Effect.provide(NodeContext.layer),
-  Effect.runPromise
-)
+  Effect.runPromise,
+);
 ```

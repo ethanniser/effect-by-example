@@ -23,9 +23,11 @@ const data = {
 };
 
 const string = JSON.stringify(data);
-console.log("string:", string)
-const decoded = Schema.decodeUnknownSync(testSchema)(JSON.parse(string));
-console.log("decoded:", decoded)
+console.log("string:", string);
+const decoded = Schema.decodeUnknownSync(testSchema)(
+  JSON.parse(string),
+);
+console.log("decoded:", decoded);
 ```
 
 Here, the last line will throw if the validation fails.
@@ -61,9 +63,9 @@ const data = {
 };
 
 const encoded = Schema.encodeSync(testSchemaJson)(data);
-console.log("encoded:", encoded)
+console.log("encoded:", encoded);
 const decoded = Schema.decodeSync(testSchemaJson)(encoded);
-console.log("decoded:", decoded)
+console.log("decoded:", decoded);
 ```
 
 ## Consuming Schema from Effects
@@ -89,12 +91,12 @@ const main = Effect.gen(function* () {
   };
 
   const encoded = yield* Schema.encode(schema)(data);
-  console.log("encoded:", encoded)
+  console.log("encoded:", encoded);
   const decoded = yield* Schema.decode(schema)(encoded);
-  console.log("decoded:", decoded)
+  console.log("decoded:", decoded);
 });
 
-Effect.runSync(main)
+Effect.runSync(main);
 ```
 
 ## Supporting difference field names when encoding to JSON
@@ -104,16 +106,18 @@ import { Schema, Effect } from "effect";
 
 const schema = Schema.parseJson(
   Schema.Struct({
-    CamelCase: Schema.propertySignature(Schema.String).pipe(Schema.fromKey("snake_case")),
+    CamelCase: Schema.propertySignature(Schema.String).pipe(
+      Schema.fromKey("snake_case"),
+    ),
   }),
 );
 
-  const data = {
-    CamelCase: "hi"
-  };
+const data = {
+  CamelCase: "hi",
+};
 
 const encoded = Schema.encodeSync(schema)(data);
-console.log("encoded:", encoded)
+console.log("encoded:", encoded);
 const decoded = Schema.decodeSync(schema)(encoded);
-console.log("decoded:", decoded)
+console.log("decoded:", decoded);
 ```

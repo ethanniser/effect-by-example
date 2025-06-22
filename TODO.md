@@ -2,6 +2,7 @@
 - [x] fix twoslash
 - [x] add 'click to copy' to codeblocks
 - [x] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
+- [ ] fix builds
 - [ ] fix wrap omg its so bad
 - [ ] fix formatting of code blocks
 - [ ] implement tag system

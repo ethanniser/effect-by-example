@@ -41,11 +41,15 @@ const exampleEffectHandler = Effect.gen(function* () {
   // probably want some kind of catch all (defects too)
   // although the `toWebHandlerRuntime` already does quite a bit for you: https://github.com/Effect-TS/effect/blob/main/packages/platform/src/Http/App.ts#L134
   Effect.catchAllCause((e) =>
-    HttpServerResponse.empty().pipe(HttpServerResponse.setStatus(500)),
+    HttpServerResponse.empty().pipe(
+      HttpServerResponse.setStatus(500),
+    ),
   ),
 );
 
-const webHandler = HttpApp.toWebHandlerRuntime(runtime)(effectHandler);
+const webHandler =
+  HttpApp.toWebHandlerRuntime(runtime)(effectHandler);
 
-export const GET: (req: Request) => Promise<Response> = webHandler;
+export const GET: (req: Request) => Promise<Response> =
+  webHandler;
 ```
