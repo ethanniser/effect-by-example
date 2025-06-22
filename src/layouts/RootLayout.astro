@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import "../styles/twoslash.css";
 import Footer from "@/components/Footer.astro";
@@ -52,8 +51,6 @@ const {
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
-
-    <ClientRouter />
   </head>
   <body class="flex min-h-screen w-full flex-col p-4 font-normal">
     <div class="grow justify-center md:flex">
