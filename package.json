@@ -3,12 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro check && astro build",
-    "build:modules": "pnpm build:open-in-playground",
+    "dev": "bunx --bun astro dev",
+    "build": "bunx --bun astro check && bunx --bun astro build",
+    "build:modules": "build:open-in-playground",
     "build:open-in-playground": "bun run ./scripts/build-js-module.ts ./src/plugins/expressive-code/open-in-playground/js-module.ts",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "bunx --bun astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

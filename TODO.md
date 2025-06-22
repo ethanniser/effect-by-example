@@ -1,9 +1,11 @@
 - [x] add search
 - [x] fix twoslash
 - [x] add 'click to copy' to codeblocks
+- [x] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
+- [ ] fix wrap omg its so bad
+- [ ] fix formatting of code blocks
+- [ ] implement tag system
 - [ ] dont fuck up licensing with go by example
-- [ ] add tag system
-- [ ] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
 - [ ] a way to link to docs pages
 
 - [ ] add examples

@@ -9,7 +9,7 @@ Effect has a powerful type validation library (like Zod) called Schema.
 
 Here is a basic example:
 
-```ts twoslash
+```ts twoslash withOutput
 import { Schema } from "effect";
 
 const testSchema = Schema.Struct({
@@ -23,7 +23,9 @@ const data = {
 };
 
 const string = JSON.stringify(data);
+console.log("string:", string)
 const decoded = Schema.decodeUnknownSync(testSchema)(JSON.parse(string));
+console.log("decoded:", decoded)
 ```
 
 Here, the last line will throw if the validation fails.
@@ -44,7 +46,7 @@ Consider the `Schema.parseJson` function, which takes a schema and returns a new
 
 Combined with other schemas, which can serialize/deserialize types that are not JSON-compatible, we can build a complex schema capable of encoding/decoding any type.
 
-```ts twoslash
+```ts twoslash withOutput
 import { Schema } from "effect";
 
 const testSchema = Schema.Struct({
@@ -58,8 +60,10 @@ const data = {
   age: new Date(),
 };
 
-const string = Schema.encodeSync(testSchemaJson)(data);
-const decoded = Schema.decodeSync(testSchemaJson)(string);
+const encoded = Schema.encodeSync(testSchemaJson)(data);
+console.log("encoded:", encoded)
+const decoded = Schema.decodeSync(testSchemaJson)(encoded);
+console.log("decoded:", decoded)
 ```
 
 ## Consuming Schema from Effects
@@ -68,7 +72,7 @@ All of the examples so far on this page have been using the `*Sync` variants of 
 
 To consume these apis as `Effect`s, just drop the `Sync` suffix.
 
-```ts twoslash
+```ts twoslash withOutput
 import { Schema, Effect } from "effect";
 
 const schema = Schema.parseJson(
@@ -84,7 +88,32 @@ const main = Effect.gen(function* () {
     age: 30,
   };
 
-  const string = yield* Schema.encode(schema)(data);
-  const decoded = yield* Schema.decode(schema)(string);
+  const encoded = yield* Schema.encode(schema)(data);
+  console.log("encoded:", encoded)
+  const decoded = yield* Schema.decode(schema)(encoded);
+  console.log("decoded:", decoded)
 });
+
+Effect.runSync(main)
+```
+
+## Supporting difference field names when encoding to JSON
+
+```ts twoslash withOutput
+import { Schema, Effect } from "effect";
+
+const schema = Schema.parseJson(
+  Schema.Struct({
+    CamelCase: Schema.propertySignature(Schema.String).pipe(Schema.fromKey("snake_case")),
+  }),
+);
+
+  const data = {
+    CamelCase: "hi"
+  };
+
+const encoded = Schema.encodeSync(schema)(data);
+console.log("encoded:", encoded)
+const decoded = Schema.decodeSync(schema)(encoded);
+console.log("decoded:", decoded)
 ```

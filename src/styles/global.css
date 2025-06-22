@@ -4,3 +4,14 @@
 .astro-code {
   overflow: visible !important;
 }
+
+.expressive-code .frame pre.output {
+  color: #d9e7f7;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.expressive-code .frame {
+  box-shadow: none !important;
+}
+
