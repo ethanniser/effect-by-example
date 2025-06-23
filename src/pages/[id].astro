@@ -4,6 +4,8 @@ import RootLayout from "@/layouts/RootLayout.astro";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import { Tag } from "@/components/Tag";
+import OG from "@/components/og";
+import { ogImage } from "@reunmedia/astro-og-images";
 
 export async function getStaticPaths() {
   const collection = await getCollection("examples");
@@ -15,9 +17,17 @@ export async function getStaticPaths() {
 
 const { example } = Astro.props;
 const { Content } = await render(example);
+
+const ogImageUrl = await ogImage(
+  OG({
+    variant: "example",
+    title: example.data.title,
+    tags: example.data.tags || [],
+  }),
+);
 ---
 
-<RootLayout>
+<RootLayout title={example.data.title} image={ogImageUrl}>
   <Main subtitle={example.data.title}>
     <h2>Tags:</h2>
     <div class="py-1"></div>

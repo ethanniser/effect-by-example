@@ -1,8 +1,10 @@
 ---
+import { ogImage } from "@reunmedia/astro-og-images";
 import "../styles/global.css";
 import "../styles/twoslash.css";
 import Footer from "@/components/Footer.astro";
 import * as Constants from "@/lib/consts";
+import OG from "@/components/og";
 
 interface Props {
   title?: string | undefined;
@@ -15,8 +17,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const {
   title = Constants.SITE_TITLE,
   description = "A collection of short examples showing Effect in use",
-  image = "/images/twitter.jpg",
 } = Astro.props;
+const image = Astro.props.image
+  ? Astro.props.image
+  : await ogImage(OG({ variant: "index" }));
 ---
 
 <!doctype html>
@@ -29,6 +33,12 @@ const {
     <meta name="generator" content={Astro.generator} />
 
     <!-- Font preloads -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />

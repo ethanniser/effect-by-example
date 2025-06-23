@@ -21,6 +21,8 @@
     "@effect/vitest": "^0.18.1",
     "@expressive-code/plugin-collapsible-sections": "^0.40.2",
     "@expressive-code/plugin-line-numbers": "^0.40.2",
+    "@fontsource/inter": "^5.2.6",
+    "@reunmedia/astro-og-images": "^0.2.0",
     "@shikijs/twoslash": "^2.4.2",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.15",

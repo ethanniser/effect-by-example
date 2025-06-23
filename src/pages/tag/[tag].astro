@@ -31,7 +31,7 @@ const { tag, examples } = Astro.props;
 const allExamples = await getCollection("examples");
 ---
 
-<RootLayout>
+<RootLayout title={`${tag} examples`}>
   <Main>
     <IntroText />
     <div class="py-3"></div>

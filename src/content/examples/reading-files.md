@@ -1,6 +1,6 @@
 ---
 title: Reading Files
-tags: ["platform", "core"]
+tags: ["platform"]
 ---
 
 _Note: All examples on this page require the `FileSystem` service to be provided, you can do this by providing the implementation of `FileSystem` for your platform at any point in your program_
