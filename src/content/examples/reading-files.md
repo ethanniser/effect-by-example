@@ -1,6 +1,6 @@
 ---
 title: Reading Files
-tags: ["platform", "file system"]
+tags: ["platform", "core"]
 ---
 
 _Note: All examples on this page require the `FileSystem` service to be provided, you can do this by providing the implementation of `FileSystem` for your platform at any point in your program_
@@ -15,7 +15,9 @@ declare const main: Effect.Effect<
   never,
   FileSystem.FileSystem
 >;
-const runnable = main.pipe(Effect.provide(NodeFileSystem.layer));
+const runnable = main.pipe(
+  Effect.provide(NodeFileSystem.layer),
+);
 ```
 
 ## Reading a File as Bytes

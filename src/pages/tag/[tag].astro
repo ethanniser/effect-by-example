@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import RootLayout from "../../layouts/RootLayout.astro";
+import Main from "@/layouts/Main.astro";
+import { ExampleList } from "@/components/ExampleList";
+import { TagList } from "@/components/TagList";
+import IntroText from "@/components/IntroText.astro";
+
+export async function getStaticPaths() {
+  const examples = await getCollection("examples");
+
+  // Get all unique tags
+  const allTags = new Set<string>();
+  examples.forEach((example) => {
+    if (example.data.tags) {
+      example.data.tags.forEach((tag) => allTags.add(tag));
+    }
+  });
+
+  // Create paths for each tag
+  return Array.from(allTags).map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      examples: examples.filter((example) => example.data.tags?.includes(tag)),
+    },
+  }));
+}
+
+const { tag, examples } = Astro.props;
+const allExamples = await getCollection("examples");
+---
+
+<RootLayout>
+  <Main>
+    <IntroText />
+    <div class="py-3"></div>
+    <TagList client:load examples={allExamples} activeTag={tag} />
+    <div class="py-3"></div>
+    <ExampleList client:load {examples} />
+  </Main>
+</RootLayout>

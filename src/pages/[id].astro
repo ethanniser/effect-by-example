@@ -3,6 +3,7 @@ import Main from "@/layouts/Main.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
+import { Tag } from "@/components/Tag";
 
 export async function getStaticPaths() {
   const collection = await getCollection("examples");
@@ -21,16 +22,7 @@ const { Content } = await render(example);
     <h2>Tags:</h2>
     <div class="py-1"></div>
     <div class="flex flex-wrap gap-2">
-      {
-        example.data.tags?.map((tag) => (
-          <a
-            href={`/?tag=${tag}`}
-            class="rounded-md border border-black px-2 py-1"
-          >
-            {tag}
-          </a>
-        ))
-      }
+      {example.data.tags?.map((tag) => <Tag tag={tag} client:load />)}
     </div>
     <div class="py-3"></div>
     <article class="prose">

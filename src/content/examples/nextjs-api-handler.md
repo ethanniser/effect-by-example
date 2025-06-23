@@ -1,6 +1,6 @@
 ---
 title: Next.js API Handler (App Router)
-tags: ["Next.js"]
+tags: ["nextjs"]
 ---
 
 ```ts twoslash

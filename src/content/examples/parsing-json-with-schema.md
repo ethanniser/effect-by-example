@@ -1,6 +1,6 @@
 ---
 title: Parsing JSON with Schema
-tags: ["Schema"]
+tags: ["schema"]
 ---
 
 Effect has a powerful type validation library (like Zod) called Schema.
