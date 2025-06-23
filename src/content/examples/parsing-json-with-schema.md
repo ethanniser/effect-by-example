@@ -24,9 +24,7 @@ const data = {
 
 const string = JSON.stringify(data);
 console.log("string:", string);
-const decoded = Schema.decodeUnknownSync(testSchema)(
-  JSON.parse(string),
-);
+const decoded = Schema.decodeUnknownSync(testSchema)(JSON.parse(string));
 console.log("decoded:", decoded);
 ```
 

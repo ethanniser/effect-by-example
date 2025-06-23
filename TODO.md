@@ -3,9 +3,10 @@
 - [x] add 'click to copy' to codeblocks
 - [x] some kind of doc test? (maybe gen the md files from the code like gobyexample does?)
 - [ ] fix builds
-- [ ] fix wrap omg its so bad
-- [ ] fix formatting of code blocks
-- [ ] implement tag system
+- [x] fix wrap omg its so bad
+- [ ] OG images
+- [x] fix formatting of code blocks
+- [x] implement tag system
 - [ ] dont fuck up licensing with go by example
 - [ ] a way to link to docs pages
 

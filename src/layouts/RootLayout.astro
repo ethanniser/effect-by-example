@@ -14,7 +14,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
   title = Constants.SITE_TITLE,
-  description = "A collection of short examples showing Effect TS in use",
+  description = "A collection of short examples showing Effect in use",
   image = "/images/twitter.jpg",
 } = Astro.props;
 ---
@@ -52,9 +52,9 @@ const {
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
   </head>
-  <body class="flex min-h-screen w-full flex-col p-4 font-normal">
+  <body class="flex min-h-screen w-full flex-col px-4 py-4 font-normal md:px-0">
     <div class="grow justify-center md:flex">
-      <main class="w-full md:w-3/4 md:max-w-2xl">
+      <main class="w-full md:w-3/4 md:max-w-3xl">
         <slot />
       </main>
       <div class="py-7"></div>

@@ -6,9 +6,7 @@ tags: ["nextjs"]
 ```ts twoslash
 interface User {}
 
-declare const doThing: (
-  id: string,
-) => Effect.Effect<User, Error>;
+declare const doThing: (id: string) => Effect.Effect<User, Error>;
 
 //---cut---
 
@@ -31,8 +29,7 @@ const runtime = await managedRuntime.runtime();
 // it consumes the request from context anywhere
 // and ultimately produces some http response
 const exampleEffectHandler = Effect.gen(function* () {
-  const request =
-    yield* HttpServerRequest.HttpServerRequest;
+  const request = yield* HttpServerRequest.HttpServerRequest;
   const params = yield* request.urlParamsBody;
   const id = yield* UrlParams.getFirst(params, "id").pipe(
     Effect.mapError(() => new Error("no id param found")),
@@ -41,9 +38,7 @@ const exampleEffectHandler = Effect.gen(function* () {
   return yield* HttpServerResponse.json(data);
 });
 
-const webHandler = HttpApp.toWebHandlerRuntime(runtime)(
-  exampleEffectHandler,
-);
+const webHandler = HttpApp.toWebHandlerRuntime(runtime)(exampleEffectHandler);
 
 type Handler = (req: Request) => Promise<Response>;
 export const GET: Handler = webHandler;

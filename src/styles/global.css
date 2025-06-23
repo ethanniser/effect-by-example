@@ -15,3 +15,7 @@
 .expressive-code .frame {
   box-shadow: none !important;
 }
+
+.prose {
+  max-width: 100%;
+}
