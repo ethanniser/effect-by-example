@@ -11,7 +11,13 @@ export default defineEcConfig({
     pluginCollapsibleSections(),
     pluginLineNumbers(),
     pluginOpenInPlayground(),
-    ecTwoSlash(),
+    ecTwoSlash({
+      twoslashOptions: {
+        compilerOptions: {
+          exactOptionalPropertyTypes: false
+        }
+      }
+    }),
   ],
   themes: ["github-light", "github-dark"],
   defaultProps: {

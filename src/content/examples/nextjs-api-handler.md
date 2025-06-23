@@ -42,3 +42,40 @@ const webHandler = HttpApp.toWebHandlerRuntime(runtime)(exampleEffectHandler);
 type Handler = (req: Request) => Promise<Response>;
 export const GET: Handler = webHandler;
 ```
+
+## `waitUntil`
+
+```ts twoslash
+interface ExecutionContext {
+  waitUntil(promise: Promise<any>): void;
+  passThroughOnException(): void;
+  props: any;
+}
+//---cut---
+import { Effect, Runtime, Context, Layer } from "effect";
+
+class WaitUntil extends Context.Tag("WaitUntil")<
+  WaitUntil,
+  (promise: Promise<unknown>) => void
+>() {}
+
+const effectWaitUntil = <A, E, R>(
+  effect: Effect.Effect<A, E, R>,
+  abortSignal?: AbortSignal,
+) =>
+  Effect.runtime<R>().pipe(
+    Effect.zip(WaitUntil),
+    Effect.flatMap(([runtime, waitUntil]) =>
+      Effect.sync(() =>
+        waitUntil(Runtime.runPromise(runtime, effect, { signal: abortSignal })),
+      ),
+    ),
+  );
+
+import { waitUntil } from "@vercel/functions";
+
+const VercelWaitUntil = Layer.succeed(WaitUntil, waitUntil);
+
+const CloudflareWaitUntil = (ctx: ExecutionContext) =>
+  Layer.succeed(WaitUntil, ctx.waitUntil);
+```

@@ -6,6 +6,7 @@
       "dependencies": {
         "@astrojs/check": "^0.9.4",
         "@astrojs/preact": "^4.0.5",
+        "@effect/cluster": "^0.39.5",
         "@effect/experimental": "^0.41.1",
         "@effect/opentelemetry": "^0.44.1",
         "@effect/platform": "^0.77.1",
@@ -21,6 +22,7 @@
         "@types/alpinejs": "^3.13.11",
         "@types/bun": "^1.2.5",
         "@types/node": "^22.13.10",
+        "@vercel/functions": "^2.2.2",
         "alpinejs": "^3.14.8",
         "astro": "^5.5.3",
         "astro-expressive-code": "^0.40.2",
@@ -97,6 +99,8 @@
 
     "@ctrl/tinycolor": ["@ctrl/tinycolor@4.1.0", "", {}, "sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ=="],
 
+    "@effect/cluster": ["@effect/cluster@0.39.5", "", { "peerDependencies": { "@effect/platform": "^0.85.2", "@effect/rpc": "^0.62.4", "@effect/sql": "^0.38.2", "@effect/workflow": "^0.2.4", "effect": "^3.16.8" } }, "sha512-KdixcfCteksRIVEe/X9vsPhEbxQxOr2ID/PD0mwgkQHD5enN1gU1WVG0EOkNux9XA4K4KO6BuHzilqXZSeNdNg=="],
+
     "@effect/experimental": ["@effect/experimental@0.41.1", "", { "dependencies": { "msgpackr": "^1.10.2", "uuid": "^11.0.3" }, "peerDependencies": { "@effect/platform": "^0.77.1", "@effect/platform-node": "^0.73.1", "effect": "^3.13.1", "ioredis": "^5", "lmdb": "^3", "ws": "^8" }, "optionalPeers": ["@effect/platform-node", "ioredis", "lmdb", "ws"] }, "sha512-+dYypZmeTOgfTora6tJ5SCaAxWs25NX9pjm/dX60tnsEEuB2YzFRGbshFmbTx0KcDPKZBplKEoxbuADSTZz4mw=="],
 
     "@effect/opentelemetry": ["@effect/opentelemetry@0.44.1", "", { "peerDependencies": { "@opentelemetry/api": "^1.6", "@opentelemetry/resources": "^1.22", "@opentelemetry/sdk-metrics": "^1.22", "@opentelemetry/sdk-trace-base": "^1.22", "@opentelemetry/sdk-trace-node": "^1.22", "@opentelemetry/sdk-trace-web": "^1.22", "@opentelemetry/semantic-conventions": "^1.24.1", "effect": "^3.13.1" }, "optionalPeers": ["@opentelemetry/sdk-metrics", "@opentelemetry/sdk-trace-base", "@opentelemetry/sdk-trace-node", "@opentelemetry/sdk-trace-web"] }, "sha512-GBZy+EBzsB/eXRKn8vRp/HHdoQfHxmcAMGJfwX4y8w7XsFcPsDHkOCZSgQQs22sEa4KboInLdklCVMTDLGxF3Q=="],
@@ -107,7 +111,13 @@
 
     "@effect/platform-node-shared": ["@effect/platform-node-shared@0.27.1", "", { "dependencies": { "@parcel/watcher": "^2.4.1", "multipasta": "^0.2.5" }, "peerDependencies": { "@effect/platform": "^0.77.1", "effect": "^3.13.1" } }, "sha512-z3zQTwLiH3S/TcFv736F7ncAwqHU/PGW4VJeHy3ptwgaXq4QZGabn7pdE1Plx3eTcQaFNqVgeSgLoGlEKAo4rw=="],
 
+    "@effect/rpc": ["@effect/rpc@0.62.4", "", { "peerDependencies": { "@effect/platform": "^0.85.2", "effect": "^3.16.8" } }, "sha512-5oPVKLZEoqJs3hDAKIcpTRe5qvX1pA4U5ai0LL3pcVLpXZrv0z3mi0gslySM/q85IxrZo+sOcuo18OS2jsuA0g=="],
+
+    "@effect/sql": ["@effect/sql@0.38.2", "", { "dependencies": { "@opentelemetry/semantic-conventions": "^1.33.0", "uuid": "^11.0.3" }, "peerDependencies": { "@effect/experimental": "^0.49.2", "@effect/platform": "^0.85.2", "effect": "^3.16.8" } }, "sha512-hZNFlVDINrORcLyVuL8zhjjR3ghR4WxzQZZdqmkKKi3C5sE7AOl6TUNogkqmepKw0aLWF0MbLi46/htgeRtsCQ=="],
+
     "@effect/vitest": ["@effect/vitest@0.18.1", "", { "peerDependencies": { "effect": "^3.13.1", "vitest": "^2.0.5" } }, "sha512-aRAupCEnYIx2O6lBncw1SA/harBQEsdIgZ9dLhb2LmRnsw24pJZDq7gV5jkuMYY7fgPEgVEHTJv/GynUvM+5Nw=="],
+
+    "@effect/workflow": ["@effect/workflow@0.2.4", "", { "peerDependencies": { "@effect/platform": "^0.85.2", "@effect/rpc": "^0.62.4", "effect": "^3.16.8" } }, "sha512-FUvZ3x2uDqRwNYJ4e5Mz0YO9MncH3o4uDLOtFRuTCW+NnMN0dLAiEwg2TsLwtWEm1xayAyk6Nn1+AM6TUmFLhw=="],
 
     "@emmetio/abbreviation": ["@emmetio/abbreviation@2.3.3", "", { "dependencies": { "@emmetio/scanner": "^1.0.4" } }, "sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA=="],
 
@@ -430,6 +440,8 @@
     "@typescript/vfs": ["@typescript/vfs@1.6.1", "", { "dependencies": { "debug": "^4.1.1" }, "peerDependencies": { "typescript": "*" } }, "sha512-JwoxboBh7Oz1v38tPbkrZ62ZXNHAk9bJ7c9x0eI5zBfBnBYGhURdbnh7Z4smN/MV48Y5OCcZb58n972UtbazsA=="],
 
     "@ungap/structured-clone": ["@ungap/structured-clone@1.3.0", "", {}, "sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g=="],
+
+    "@vercel/functions": ["@vercel/functions@2.2.2", "", { "peerDependencies": { "@aws-sdk/credential-provider-web-identity": "*" }, "optionalPeers": ["@aws-sdk/credential-provider-web-identity"] }, "sha512-wgtgFwhYAUzS7UOvw44q14FaoRPONEnyoM0JlrjcDkI+kzSu7M8J5Tk5T3Kvv52//8is+HGxVQtaBSiO3G0wbw=="],
 
     "@vitest/expect": ["@vitest/expect@2.1.9", "", { "dependencies": { "@vitest/spy": "2.1.9", "@vitest/utils": "2.1.9", "chai": "^5.1.2", "tinyrainbow": "^1.2.0" } }, "sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw=="],
 
@@ -1292,6 +1304,8 @@
     "@babel/traverse/@babel/parser": ["@babel/parser@7.26.10", "", { "dependencies": { "@babel/types": "^7.26.10" }, "bin": "./bin/babel-parser.js" }, "sha512-6aQR2zGE/QFi8JpDLjUZEPYOs7+mhKXm86VaKFiLP35JQwQb6bwUE+XbvkH0EptsYhbNBSUGaUBLKqxH1xSgsA=="],
 
     "@babel/traverse/@babel/types": ["@babel/types@7.26.10", "", { "dependencies": { "@babel/helper-string-parser": "^7.25.9", "@babel/helper-validator-identifier": "^7.25.9" } }, "sha512-emqcG3vHrpxUKTrxcblR36dcrcoRDvKmnL/dCL6ZsHaShW80qxCAcNhzQZrpeM765VzEos+xOi4s+r4IXzTwdQ=="],
+
+    "@effect/sql/@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.34.0", "", {}, "sha512-aKcOkyrorBGlajjRdVoJWHTxfxO1vCNHLJVlSDaRHDIdjU+pX8IYQPvPDkYiujKLbRnWU+1TBwEt0QRgSm4SGA=="],
 
     "@expressive-code/core/postcss": ["postcss@8.5.2", "", { "dependencies": { "nanoid": "^3.3.8", "picocolors": "^1.1.1", "source-map-js": "^1.2.1" } }, "sha512-MjOadfU3Ys9KYoX0AdkBlFEF1Vx37uCCeN4ZHnmwm9FfpbsGWMZeBLMmmpY+6Ocqod7mkdZ0DT31OlbsFrLlkA=="],
 
