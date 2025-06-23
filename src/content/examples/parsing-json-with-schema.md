@@ -99,7 +99,7 @@ const main = Effect.gen(function* () {
 Effect.runSync(main);
 ```
 
-## Supporting difference field names when encoding to JSON
+## Different field names when encoding/decoding to/from JSON
 
 ```ts twoslash withOutput
 import { Schema, Effect } from "effect";

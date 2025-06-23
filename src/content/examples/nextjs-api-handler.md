@@ -4,6 +4,14 @@ tags: ["Next.js"]
 ---
 
 ```ts twoslash
+interface User {}
+
+declare const doThing: (
+  id: string,
+) => Effect.Effect<User, Error>;
+
+//---cut---
+
 import {
   HttpApp,
   HttpServerRequest,
@@ -18,38 +26,25 @@ declare const mainLive: Layer.Layer<void>;
 const managedRuntime = ManagedRuntime.make(mainLive);
 const runtime = await managedRuntime.runtime();
 
-// everything interesting happens in this effect- it consumes the request from context anywhere and ultimately produces some http response
-declare const effectHandler: Effect.Effect<
-  HttpServerResponse.HttpServerResponse,
-  never,
-  HttpServerRequest.HttpServerRequest
->;
-
-// example:
-declare const doThing: (
-  id: string,
-) => Effect.Effect<{ readonly _tag: "user" }, Error>;
+// everything interesting happens in this effect
+// Which is of type Effect<HttpServerResponse, _, HttpServerRequest>
+// it consumes the request from context anywhere
+// and ultimately produces some http response
 const exampleEffectHandler = Effect.gen(function* () {
-  const request = yield* HttpServerRequest.HttpServerRequest;
+  const request =
+    yield* HttpServerRequest.HttpServerRequest;
   const params = yield* request.urlParamsBody;
   const id = yield* UrlParams.getFirst(params, "id").pipe(
     Effect.mapError(() => new Error("no id param found")),
   );
   const data = yield* doThing(id);
   return yield* HttpServerResponse.json(data);
-}).pipe(
-  // probably want some kind of catch all (defects too)
-  // although the `toWebHandlerRuntime` already does quite a bit for you: https://github.com/Effect-TS/effect/blob/main/packages/platform/src/Http/App.ts#L134
-  Effect.catchAllCause((e) =>
-    HttpServerResponse.empty().pipe(
-      HttpServerResponse.setStatus(500),
-    ),
-  ),
+});
+
+const webHandler = HttpApp.toWebHandlerRuntime(runtime)(
+  exampleEffectHandler,
 );
 
-const webHandler =
-  HttpApp.toWebHandlerRuntime(runtime)(effectHandler);
-
-export const GET: (req: Request) => Promise<Response> =
-  webHandler;
+type Handler = (req: Request) => Promise<Response>;
+export const GET: Handler = webHandler;
 ```
