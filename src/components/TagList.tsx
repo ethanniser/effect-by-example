@@ -29,7 +29,7 @@ export function TagList({
 
   return (
     <div>
-      <h2 class="text-xl font-semibold">Browse by Tags</h2>
+      <h2 class="text-xl font-semibold">Browse by Tag</h2>
       <div class="py-1"></div>
       <div class="flex flex-wrap gap-2">
         {activeTag && (
