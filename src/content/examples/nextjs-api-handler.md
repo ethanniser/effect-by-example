@@ -9,7 +9,6 @@ interface User {}
 declare const doThing: (id: string) => Effect.Effect<User, Error>;
 
 //---cut---
-
 import {
   HttpApp,
   HttpServerRequest,
@@ -19,7 +18,7 @@ import {
 import { Effect, Layer, ManagedRuntime } from "effect";
 
 // your main layer representing all of the services your handler needs (db, auth, etc.)
-declare const mainLive: Layer.Layer<void>;
+const mainLive = Layer.empty;
 
 const managedRuntime = ManagedRuntime.make(mainLive);
 const runtime = await managedRuntime.runtime();
