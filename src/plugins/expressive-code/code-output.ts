@@ -138,7 +138,7 @@ export function pluginCodeOutput() {
           .join("\n");
 
         // get id by hashing the code
-        const hash = createHash("sha256").update(code).digest("hex");
+        const hash = createHash("md5").update(code).digest("hex");
 
         // Execute the code in a sandbox and capture output
         const output = await managedRuntime.runPromise(
