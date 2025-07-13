@@ -97,6 +97,7 @@ class Sandbox extends Context.Tag("Sandbox")<
   static layerVercel = Layer.scoped(
     this,
     Effect.gen(function* () {
+      console.log("initializing vercel sandbox");
       const sandbox = yield* Effect.acquireRelease(
         Effect.tryPromise(initVercelSandbox),
         (sandbox) => Effect.promise(() => sandbox.stop()),
@@ -131,6 +132,7 @@ class Sandbox extends Context.Tag("Sandbox")<
   static layerLocal = Layer.effect(
     this,
     Effect.gen(function* () {
+      console.log("initializing local sandbox");
       const fs = yield* FileSystem.FileSystem;
       const cmdEx = yield* CommandExecutor.CommandExecutor;
 
