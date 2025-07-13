@@ -208,7 +208,7 @@ type OGProps =
     }
   | { variant: "example"; title: string; tags: string[] };
 
-export default function OG(props: OGProps) {
+export default function OG(props: OGProps): any {
   if (props.variant === "index") {
     return <IndexOG />;
   }

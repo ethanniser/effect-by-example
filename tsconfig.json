@@ -7,7 +7,7 @@
     "noUnusedParameters": false,
     "baseUrl": ".",
     "allowJs": true,
-    "lib": ["DOM"],
+    "lib": ["DOM", "es2023"],
     "paths": {
       "@/*": ["src/*"]
     },

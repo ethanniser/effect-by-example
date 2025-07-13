@@ -24,6 +24,7 @@
       - [ ] custom config providers
   - [ ] other
     - [ ] how to export otel https://mattrossman.com/2025/02/17/getting-started-with-tracing-in-effect/
+    - [ ] RX (frontend): how to read effect in a react component, how to do mutations, how to interop with react state
   - [ ] schema
     - [ ] transformOrFail
     - [ ] one directional transformation
