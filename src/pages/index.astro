@@ -5,8 +5,9 @@ import Main from "@/layouts/Main.astro";
 import { ExampleList } from "@/components/ExampleList";
 import { TagList } from "@/components/TagList";
 import IntroText from "@/components/IntroText.astro";
+import { sortExamples } from "@/lib/example-order";
 
-const examples = await getCollection("examples");
+const examples = sortExamples(await getCollection("examples"));
 ---
 
 <RootLayout>

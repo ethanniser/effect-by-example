@@ -5,9 +5,11 @@ import Main from "@/layouts/Main.astro";
 import { ExampleList } from "@/components/ExampleList";
 import { TagList } from "@/components/TagList";
 import IntroText from "@/components/IntroText.astro";
+import { sortExamples } from "@/lib/example-order";
 
 export async function getStaticPaths() {
-  const examples = await getCollection("examples");
+  const allExamples = await getCollection("examples");
+  const examples = sortExamples(allExamples);
 
   // Get all unique tags
   const allTags = new Set<string>();
