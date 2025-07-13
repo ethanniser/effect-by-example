@@ -18,7 +18,7 @@ async function initSandbox(): Promise<VercelSandbox> {
       url: "https://github.com/ethanniser/effect-sandbox-template.git",
       type: "git",
     },
-    resources: { vcpus: 4 },
+    resources: { vcpus: 2 },
     timeout: ms("30s"),
     runtime: "node22",
   });
