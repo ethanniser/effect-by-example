@@ -1,0 +1,3 @@
+[submodule "sandbox-template"]
+	path = sandbox-template
+	url = https://github.com/ethanniser/effect-sandbox-template.git
