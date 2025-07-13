@@ -13,6 +13,7 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "target": "ES2023"
   }
 }

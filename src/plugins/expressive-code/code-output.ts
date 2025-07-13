@@ -161,10 +161,7 @@ export function pluginCodeOutput() {
         const currentChildren = context.renderData.blockAst.children;
         const newChildren = [
           ...currentChildren.slice(0, lastPre + 1),
-          h(
-            "pre.output",
-            blockData.output.split("\n").map((line) => h("div", line)),
-          ),
+          h("pre.output", blockData.output),
           ...currentChildren.slice(lastPre + 1),
         ];
         context.renderData.blockAst.children = newChildren;
