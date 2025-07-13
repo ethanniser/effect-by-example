@@ -14,6 +14,7 @@ import {
 import { createHash } from "crypto";
 import { Command, CommandExecutor, FileSystem } from "@effect/platform";
 import { NodeContext } from "@effect/platform-node";
+import type { AstroIntegration } from "astro";
 
 interface OutputData {
   output: string | null;
@@ -185,17 +186,33 @@ const layer = process.env.VERCEL
 
 const managedRuntime = ManagedRuntime.make(layer.pipe(Layer.orDie));
 
-// cleanup on SIGINT
-let recievedSignal = false;
-function onSigint() {
-  if (recievedSignal) return;
-  recievedSignal = true;
-  process.removeListener("SIGINT", onSigint);
-  process.removeListener("SIGTERM", onSigint);
-  managedRuntime.dispose();
+export function effectCodeOutputHooks(): AstroIntegration {
+  // cleanup on SIGINT
+  let recievedSignal = false;
+  function onSigint() {
+    if (recievedSignal) return;
+    recievedSignal = true;
+    process.removeListener("SIGINT", onSigint);
+    process.removeListener("SIGTERM", onSigint);
+    managedRuntime.dispose();
+  }
+  process.on("SIGINT", onSigint);
+  process.on("SIGTERM", onSigint);
+
+  return {
+    name: "effect-code-output",
+    hooks: {
+      "astro:server:done": async ({ logger }) => {
+        logger.info("disposing effect code output runtime");
+        await managedRuntime.dispose();
+      },
+      "astro:build:done": async ({ logger }) => {
+        logger.info("disposing effect code output runtime");
+        await managedRuntime.dispose();
+      },
+    },
+  };
 }
-process.on("SIGINT", onSigint);
-process.on("SIGTERM", onSigint);
 
 export function pluginCodeOutput() {
   return definePlugin({
