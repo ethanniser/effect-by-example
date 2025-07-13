@@ -29,6 +29,12 @@ const main = Effect.gen(function* () {
 
 import { NodeContext } from "@effect/platform-node";
 await main.pipe(Effect.provide(NodeContext.layer), Effect.runPromise);
+// ---cut-after---
+await FileSystem.FileSystem.pipe(
+  Effect.flatMap((fs) => fs.remove("file.txt")),
+  Effect.provide(NodeContext.layer),
+  Effect.runPromise,
+);
 ```
 
 ## Reading a File as Text
@@ -46,6 +52,12 @@ const main = Effect.gen(function* () {
 
 import { NodeContext } from "@effect/platform-node";
 await main.pipe(Effect.provide(NodeContext.layer), Effect.runPromise);
+// ---cut-after---
+await FileSystem.FileSystem.pipe(
+  Effect.flatMap((fs) => fs.remove("file.txt")),
+  Effect.provide(NodeContext.layer),
+  Effect.runPromise,
+);
 ```
 
 ## Reading a File Incrementally
@@ -78,4 +90,10 @@ const main = Effect.gen(function* () {
 
 import { NodeContext } from "@effect/platform-node";
 await main.pipe(Effect.provide(NodeContext.layer), Effect.runPromise);
+// ---cut-after---
+await FileSystem.FileSystem.pipe(
+  Effect.flatMap((fs) => fs.remove("file.txt")),
+  Effect.provide(NodeContext.layer),
+  Effect.runPromise,
+);
 ```

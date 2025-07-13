@@ -3,23 +3,31 @@
 import { definePlugin, AttachedPluginData } from "@expressive-code/core";
 import { h } from "@expressive-code/core/hast";
 import { Sandbox as VercelSandbox } from "@vercel/sandbox";
-import ms from "ms";
-import { Effect, ManagedRuntime } from "effect";
+import {
+  Cause,
+  Context,
+  Duration,
+  Effect,
+  Layer,
+  ManagedRuntime,
+} from "effect";
 import { createHash } from "crypto";
+import { Command, CommandExecutor, FileSystem } from "@effect/platform";
+import { NodeContext } from "@effect/platform-node";
 
 interface OutputData {
   output: string | null;
 }
 const outputData = new AttachedPluginData<OutputData>(() => ({ output: null }));
 
-async function initSandbox(): Promise<VercelSandbox> {
+async function initVercelSandbox(): Promise<VercelSandbox> {
   const sandbox = await VercelSandbox.create({
     source: {
       url: "https://github.com/ethanniser/effect-sandbox-template.git",
       type: "git",
     },
     resources: { vcpus: 2 },
-    timeout: ms("30s"),
+    timeout: Duration.toMillis("1 minute"),
     runtime: "node22",
   });
 
@@ -78,39 +86,99 @@ async function initSandbox(): Promise<VercelSandbox> {
   return sandbox;
 }
 
-const executeCodeInSandbox = Effect.fnUntraced(function* (
-  name: string,
-  code: string,
-) {
-  console.log("executing code in sandbox", name);
-  const sandbox = yield* Sandbox;
-  yield* Effect.tryPromise(() =>
-    sandbox.writeFiles([
-      {
-        path: `${name}.ts`,
-        content: Buffer.from(code),
-      },
-    ]),
-  );
+const hash = (code: string) => createHash("md5").update(code).digest("hex");
 
-  const run = yield* Effect.tryPromise(() =>
-    sandbox.runCommand({
-      cmd: "./bun-linux-x64/bun",
-      args: ["run", `${name}.ts`],
+class Sandbox extends Context.Tag("Sandbox")<
+  Sandbox,
+  {
+    runCode: (code: string) => Effect.Effect<string, Cause.UnknownException>;
+  }
+>() {
+  static layerVercel = Layer.scoped(
+    this,
+    Effect.gen(function* () {
+      const sandbox = yield* Effect.acquireRelease(
+        Effect.tryPromise(initVercelSandbox),
+        (sandbox) => Effect.promise(() => sandbox.stop()),
+      );
+
+      const runCode = (code: string) =>
+        Effect.tryPromise(async () => {
+          const name = hash(code);
+          console.log("executing code in sandbox", name);
+          await sandbox.writeFiles([
+            {
+              path: `${name}.ts`,
+              content: Buffer.from(code),
+            },
+          ]);
+
+          const run = await sandbox.runCommand({
+            cmd: "./bun-linux-x64/bun",
+            args: ["run", `${name}.ts`],
+          });
+
+          const output = await run.output("both");
+          return output;
+        });
+
+      return {
+        runCode,
+      };
     }),
   );
 
-  const output = yield* Effect.tryPromise(() => run.output("both"));
-  return output;
-});
+  static layerLocal = Layer.effect(
+    this,
+    Effect.gen(function* () {
+      const fs = yield* FileSystem.FileSystem;
+      const cmdEx = yield* CommandExecutor.CommandExecutor;
 
-class Sandbox extends Effect.Service<VercelSandbox>()("Sandbox", {
-  scoped: Effect.acquireRelease(Effect.tryPromise(initSandbox), (sandbox) =>
-    Effect.promise(() => sandbox.stop()),
-  ),
-}) {}
+      console.log("installing packages");
+      const installExit = yield* Command.make("bun", "install").pipe(
+        Command.workingDirectory("sandbox-template"),
+        Command.exitCode,
+      );
 
-const managedRuntime = ManagedRuntime.make(Sandbox.Default);
+      if (installExit !== 0) {
+        yield* new Cause.UnknownException("installing packages failed");
+      }
+
+      const runCode = (code: string) =>
+        Effect.gen(function* () {
+          const name = hash(code);
+          yield* fs.writeFileString(`./sandbox-template/${name}.ts`, code);
+          yield* Effect.addFinalizer(() =>
+            fs
+              .remove(`./sandbox-template/${name}.ts`)
+              .pipe(Effect.ignoreLogged),
+          );
+
+          console.log(`executing code in sandbox ${name}`);
+          const result = yield* Command.make("bun", "run", `${name}.ts`).pipe(
+            Command.workingDirectory("sandbox-template"),
+            Command.string,
+          );
+
+          return result;
+        }).pipe(
+          Effect.mapError((e) => new Cause.UnknownException(e)),
+          Effect.scoped,
+          Effect.provideService(CommandExecutor.CommandExecutor, cmdEx),
+        );
+
+      return {
+        runCode,
+      };
+    }),
+  );
+}
+
+const layer = process.env.VERCEL
+  ? Sandbox.layerVercel
+  : Sandbox.layerLocal.pipe(Layer.provide(NodeContext.layer));
+
+const managedRuntime = ManagedRuntime.make(layer.pipe(Layer.orDie));
 
 export function pluginCodeOutput() {
   return definePlugin({
@@ -137,12 +205,9 @@ export function pluginCodeOutput() {
           .map((line) => line.text)
           .join("\n");
 
-        // get id by hashing the code
-        const hash = createHash("md5").update(code).digest("hex");
-
         // Execute the code in a sandbox and capture output
         const output = await managedRuntime.runPromise(
-          executeCodeInSandbox(hash, code),
+          Effect.flatMap(Sandbox, (sandbox) => sandbox.runCode(code)),
         );
         blockData.output = output;
       },
