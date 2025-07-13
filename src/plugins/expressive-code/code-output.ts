@@ -133,9 +133,10 @@ class Sandbox extends Context.Tag("Sandbox")<
     }),
   );
 
-  static layerLocal = Layer.effect(
+  static layerLocal = Layer.scoped(
     this,
     Effect.gen(function* () {
+      yield* Effect.addFinalizer(() => Effect.log("stopping local sandbox"));
       console.log("initializing local sandbox");
       const fs = yield* FileSystem.FileSystem;
       const cmdEx = yield* CommandExecutor.CommandExecutor;
