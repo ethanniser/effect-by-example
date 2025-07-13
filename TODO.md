@@ -13,15 +13,16 @@
 
 - [ ] add examples
   - [ ] core
-    - [ ] interop with non effect code
+    - [x] interop with non effect code
     - [ ] cached / cachewithttl
-    - [ ] creating custom data types
-      - [ ] class vs non class apis
-      - [ ] data vs schema
-      - [ ] tagged error
+    - [x] creating custom data types
+      - [x] class vs non class apis
+      - [x] data vs schema
+      - [x] tagged error
     - [ ] defects
     - [ ] enviorment variables
       - [ ] custom config providers
+      - [ ] redacted
   - [ ] other
     - [ ] how to export otel https://mattrossman.com/2025/02/17/getting-started-with-tracing-in-effect/
     - [ ] RX (frontend): how to read effect in a react component, how to do mutations, how to interop with react state
