@@ -100,7 +100,10 @@ class Sandbox extends Context.Tag("Sandbox")<
       console.log("initializing vercel sandbox");
       const sandbox = yield* Effect.acquireRelease(
         Effect.tryPromise(initVercelSandbox),
-        (sandbox) => Effect.promise(() => sandbox.stop()),
+        (sandbox) =>
+          Effect.log("stopping vercel sandbox").pipe(
+            Effect.zipRight(Effect.promise(() => sandbox.stop())),
+          ),
       );
 
       const runCode = (code: string) =>
@@ -181,6 +184,18 @@ const layer = process.env.VERCEL
   : Sandbox.layerLocal.pipe(Layer.provide(NodeContext.layer));
 
 const managedRuntime = ManagedRuntime.make(layer.pipe(Layer.orDie));
+
+// cleanup on SIGINT
+let recievedSignal = false;
+function onSigint() {
+  if (recievedSignal) return;
+  recievedSignal = true;
+  process.removeListener("SIGINT", onSigint);
+  process.removeListener("SIGTERM", onSigint);
+  managedRuntime.dispose();
+}
+process.on("SIGINT", onSigint);
+process.on("SIGTERM", onSigint);
 
 export function pluginCodeOutput() {
   return definePlugin({
