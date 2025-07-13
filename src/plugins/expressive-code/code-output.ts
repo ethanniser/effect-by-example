@@ -2,16 +2,18 @@
 
 import { definePlugin, AttachedPluginData } from "@expressive-code/core";
 import { h } from "@expressive-code/core/hast";
-import { Sandbox } from "@vercel/sandbox";
+import { Sandbox as VercelSandbox } from "@vercel/sandbox";
 import ms from "ms";
+import { Effect, ManagedRuntime } from "effect";
+import { createHash } from "crypto";
 
 interface OutputData {
   output: string | null;
 }
 const outputData = new AttachedPluginData<OutputData>(() => ({ output: null }));
 
-async function executeCodeInSandbox(code: string): Promise<string> {
-  const sandbox = await Sandbox.create({
+async function initSandbox(): Promise<VercelSandbox> {
+  const sandbox = await VercelSandbox.create({
     source: {
       url: "https://github.com/ethanniser/effect-sandbox-template.git",
       type: "git",
@@ -73,21 +75,42 @@ async function executeCodeInSandbox(code: string): Promise<string> {
     throw new Error("installing packages failed");
   }
 
-  await sandbox.writeFiles([
-    {
-      path: "index.ts",
-      content: Buffer.from(code),
-    },
-  ]);
-
-  const run = await sandbox.runCommand({
-    cmd: "./bun-linux-x64/bun",
-    args: ["run", "index.ts"],
-  });
-
-  const output = await run.output("both");
-  return output;
+  return sandbox;
 }
+
+const executeCodeInSandbox = Effect.fnUntraced(function* (
+  name: string,
+  code: string,
+) {
+  console.log("executing code in sandbox", name);
+  const sandbox = yield* Sandbox;
+  yield* Effect.tryPromise(() =>
+    sandbox.writeFiles([
+      {
+        path: `${name}.ts`,
+        content: Buffer.from(code),
+      },
+    ]),
+  );
+
+  const run = yield* Effect.tryPromise(() =>
+    sandbox.runCommand({
+      cmd: "./bun-linux-x64/bun",
+      args: ["run", `${name}.ts`],
+    }),
+  );
+
+  const output = yield* Effect.tryPromise(() => run.output("both"));
+  return output;
+});
+
+class Sandbox extends Effect.Service<VercelSandbox>()("Sandbox", {
+  scoped: Effect.acquireRelease(Effect.tryPromise(initSandbox), (sandbox) =>
+    Effect.promise(() => sandbox.stop()),
+  ),
+}) {}
+
+const managedRuntime = ManagedRuntime.make(Sandbox.Default);
 
 export function pluginCodeOutput() {
   return definePlugin({
@@ -114,8 +137,13 @@ export function pluginCodeOutput() {
           .map((line) => line.text)
           .join("\n");
 
+        // get id by hashing the code
+        const hash = createHash("sha256").update(code).digest("hex");
+
         // Execute the code in a sandbox and capture output
-        const output = await executeCodeInSandbox(code);
+        const output = await managedRuntime.runPromise(
+          executeCodeInSandbox(hash, code),
+        );
         blockData.output = output;
       },
       postprocessRenderedBlock: async (context) => {
