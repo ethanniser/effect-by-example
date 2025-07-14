@@ -153,7 +153,7 @@ The correct pattern for this is using `Effect.runtime`
 import { Effect, Context, Console, Layer, Runtime, pipe } from "effect";
 
 class FooService extends Context.Tag("FooService")<FooService, number>() {
-  static layer = Layer.succeed(FooService, 10);
+  static layer = Layer.succeed(this, 10);
 }
 
 const logFoo = Effect.gen(function* () {
