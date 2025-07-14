@@ -91,6 +91,8 @@ async function nonEffectCode() {
 await nonEffectCode();
 ```
 
+### Managed Runtime
+
 If you are calling `run*` functions multiple times when running Effects with services, you likely want to reuse those services across calls.
 
 You can easily do this with `ManagedRuntime`
@@ -139,4 +141,43 @@ console.log("--- with managed runtime ---");
 await nonEffectCodeManagedRuntime();
 await nonEffectCodeManagedRuntime();
 await managedRuntime.dispose(); // run service destructors
+```
+
+### Running Effects in non-effect code callbacks
+
+There may be times where you are working in an effect context, and have to work with non-effect apis that expect a callback, where you want to run more effect code.
+
+The correct pattern for this is using `Effect.runtime`
+
+```ts twoslash withOutput
+import { Effect, Context, Console, Layer, Runtime, pipe } from "effect";
+
+class FooService extends Context.Tag("FooService")<FooService, number>() {
+  static layer = Layer.succeed(FooService, 10);
+}
+
+const logFoo = Effect.gen(function* () {
+  const foo = yield* FooService;
+  yield* Console.log(`foo: ${foo}`);
+});
+
+async function nonEffectCodeWithCallback(onDone: (result: string) => void) {
+  await new Promise((res) => setTimeout(res, 1000));
+  console.log("non effect code running callback");
+  onDone("done");
+}
+
+const main = Effect.gen(function* () {
+  // get current runtime (which must contain `FooService`)
+  const runtime = yield* Effect.runtime<FooService>();
+
+  const onDone = (result: string) => {
+    // use the existing runtime to run effects in the callback
+    Runtime.runSync(runtime, logFoo);
+  };
+
+  yield* Effect.promise(() => nonEffectCodeWithCallback(onDone));
+});
+
+pipe(main, Effect.provide(FooService.layer), Effect.runPromise);
 ```

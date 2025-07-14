@@ -11,6 +11,8 @@
   - [ ] output gen
 - [ ] a way to link to docs pages
 
+nextjs http api
+
 - [ ] add examples
   - [ ] core
     - [x] interop with non effect code
