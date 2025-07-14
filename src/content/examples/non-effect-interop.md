@@ -145,7 +145,7 @@ await managedRuntime.dispose(); // run service destructors
 
 ### Running Effects in non-effect code callbacks
 
-There may be times where you are working in an effect context, and have to work with non-effect apis that expect a callback, where you want to run more effect code.
+There may be times where you are working in an effect context, and have to work with non-effect apis that expect a callback inside which you want to run more effect code.
 
 The correct pattern for this is using `Effect.runtime`
 
