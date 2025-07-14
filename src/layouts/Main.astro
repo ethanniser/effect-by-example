@@ -6,11 +6,11 @@ type Props = {
 const { subtitle } = Astro.props;
 ---
 
-<h1 class="text-4xl font-bold">
+<div class="text-4xl font-bold">
   <a href="/" class="hover:underline">{Constants.SITE_TITLE}</a>{
     subtitle ? `: ${subtitle}` : ""
   }
-</h1>
+</div>
 <div class="py-1"></div>
 <section>
   <slot />

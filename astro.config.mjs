@@ -6,15 +6,31 @@ import ogImages from "@reunmedia/astro-og-images";
 import { readFile } from "node:fs/promises";
 import preact from "@astrojs/preact";
 import { effectCodeOutputHooks } from "./src/plugins/expressive-code/code-output";
+import remarkToc from "remark-toc";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://effectbyexample.com",
-
   output: "static",
-
   vite: {
     plugins: [tailwindcss()],
+  },
+  markdown: {
+    remarkPlugins: [remarkToc],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "wrap",
+          properties: {
+            linkedheading: true,
+          },
+        },
+      ],
+    ],
   },
   integrations: [
     expressiveCode(),
