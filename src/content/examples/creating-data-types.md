@@ -1,6 +1,6 @@
 ---
 title: Creating Data Types
-tags: ["core"]
+tags: ["core", "schema"]
 ---
 
 You can create your own data types using the `Data` module. While `Data` provides many different ways to do this, the most common way is to used `Data.TaggedClass`.
