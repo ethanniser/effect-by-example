@@ -45,8 +45,10 @@ export const POST: Handler = handler;
 
 ```ts twoslash title="src/app/api/[[...path]]/route.ts"
 import {
+  FetchHttpClient,
   HttpApi,
   HttpApiBuilder,
+  HttpApiClient,
   HttpApiEndpoint,
   HttpApiGroup,
   HttpApiSwagger,
@@ -54,7 +56,7 @@ import {
   HttpServer,
   OpenApi,
 } from "@effect/platform";
-import { Effect, Layer, Schema } from "effect";
+import { Config, Effect, Layer, Schema } from "effect";
 
 // ------------------------------------------------
 // schema
@@ -116,18 +118,14 @@ const ApiLive = HttpApiBuilder.api(MyApi).pipe(Layer.provide(FooLive));
 // ------------------------------------------------
 
 const middleware = Layer.mergeAll(
-  // cors
-  HttpApiBuilder.middlewareCors(),
-  // openapi
+  HttpApiBuilder.middlewareCors(), // cors
   HttpApiBuilder.middlewareOpenApi({
     path: "/api/openapi.json",
-  }),
-  // swagger
+  }), // openapi
   HttpApiSwagger.layer({
     path: "/api/docs",
-  }),
-  // Standard http middlewares
-  HttpApiBuilder.middleware(HttpMiddleware.logger),
+  }), // swagger
+  HttpApiBuilder.middleware(HttpMiddleware.logger), // Standard http middlewares
 );
 
 const { handler } = Layer.empty.pipe(
@@ -144,6 +142,24 @@ export const PUT: Handler = handler;
 export const PATCH: Handler = handler;
 export const DELETE: Handler = handler;
 export const OPTIONS: Handler = handler;
+
+// ------------------------------------------------
+// typesafe client
+// ------------------------------------------------
+
+const example = Effect.gen(function* () {
+  // import schema only
+  const client = yield* HttpApiClient.make(MyApi, {
+    baseUrl: yield* Config.string("BASE_URL"),
+  });
+
+  const res = yield* client.foo.bar({ headers: { page: 1 } });
+  const res2 = yield* client.foo.baz({
+    path: { id: 1 },
+    payload: { name: "test" },
+  });
+  return { res, res2 };
+}).pipe(Effect.provide(FetchHttpClient.layer));
 ```
 
 ## `waitUntil`
