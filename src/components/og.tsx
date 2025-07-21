@@ -100,7 +100,7 @@ function IndexOG() {
             lineHeight: "1.3",
           }}
         >
-          A collection of short examples showing Effect in use
+          A curated set of high quality snippets with explanations for Effect
         </p>
       }
       bottomRight={
@@ -149,7 +149,7 @@ function ExampleOG({ title, tags }: ExampleOGProps) {
             lineHeight: "1.3",
           }}
         >
-          A collection of short examples showing Effect in use
+          A curated set of high quality snippets with explanations for Effect
         </p>
       }
       bottomLeft={

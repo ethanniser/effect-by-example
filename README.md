@@ -1,6 +1,6 @@
 # Effect by Example
 
-A curated set of high quality snippets and examples for using [Effect](https:/effect.website)
+A curated set of high quality snippets with explanations for [Effect](https:/effect.website)
 
 ---
 
