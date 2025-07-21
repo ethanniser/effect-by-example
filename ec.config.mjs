@@ -14,9 +14,9 @@ export default defineEcConfig({
     ecTwoSlash({
       twoslashOptions: {
         compilerOptions: {
-          exactOptionalPropertyTypes: false
-        }
-      }
+          exactOptionalPropertyTypes: false,
+        },
+      },
     }),
   ],
   themes: ["github-light", "github-dark"],
