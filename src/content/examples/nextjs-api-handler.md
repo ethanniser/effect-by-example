@@ -116,14 +116,18 @@ const ApiLive = HttpApiBuilder.api(MyApi).pipe(Layer.provide(FooLive));
 // ------------------------------------------------
 
 const middleware = Layer.mergeAll(
-  HttpApiBuilder.middlewareCors(), // cors
+  // cors
+  HttpApiBuilder.middlewareCors(),
+  // openapi
   HttpApiBuilder.middlewareOpenApi({
     path: "/api/openapi.json",
-  }), // openapi
+  }),
+  // swagger
   HttpApiSwagger.layer({
     path: "/api/docs",
-  }), // swagger
-  HttpApiBuilder.middleware(HttpMiddleware.logger), // Standard http middlewares
+  }),
+  // Standard http middlewares
+  HttpApiBuilder.middleware(HttpMiddleware.logger),
 );
 
 const { handler } = Layer.empty.pipe(
